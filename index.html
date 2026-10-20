@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reddit Marketing Portfolio</title>
+<style>
+:root {
+  color-scheme: light;
+  --site-primary: #d85b43;
+  --site-on-primary: #ffffff;
+  --site-secondary: #20201e;
+  --site-on-secondary: #f8f7f4;
+  --site-background: #f7f6f2;
+  --site-on-background: #20201e;
+  --site-font-body: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --site-font-heading: Georgia, "Times New Roman", serif;
+  --site-heading-scale: 1;
+  --site-spacing-scale: 1;
+  --site-radius-scale: 1;
+  --site-decoration-opacity: 1;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; font-family: var(--site-font-body); background: #f7f6f2; color: #20201e; }
+#app { min-height: 100vh; width: 100%; background-color: var(--site-background); color: var(--site-on-background); border-radius: 0; }
+a { color: inherit; text-decoration: none; }
+button, input, textarea { font: inherit; }
+.wrap { width: min(1160px, calc(100% - 48px)); margin: 0 auto; }
+.nav { display:flex; align-items:center; justify-content:space-between; gap:24px; padding:24px 0; border-bottom:1px solid #dedbd3; }
+.brand { display:flex; align-items:center; gap:10px; font-weight:750; letter-spacing:-.04em; }
+.brand-mark { width:32px;height:32px;border-radius:50%;display:grid;place-items:center;background:var(--site-primary);color:var(--site-on-primary);font-weight:800;font-size:15px; }
+.navlinks { display:flex; align-items:center; gap:25px; font-size:13px; color:#68665f; }
+.navlinks a:hover, .text-link:hover { color:var(--site-primary); }
+.nav-cta, .button { display:inline-flex; align-items:center; justify-content:center; gap:9px; padding:12px 17px; border-radius:calc(8px * var(--site-radius-scale)); background:var(--site-secondary); color:var(--site-on-secondary); font-size:13px; font-weight:650; border:1px solid var(--site-secondary); transition:transform .2s, background .2s; }
+.nav-cta:hover, .button:hover { transform:translateY(-2px); }
+.button.primary { background:var(--site-primary); border-color:var(--site-primary); color:var(--site-on-primary); }
+.button.ghost { background:transparent; border-color:light-dark(#cbc7bd,#4a4944); color:inherit; }
+.hero { padding:92px 0 76px; display:grid; grid-template-columns:1.15fr .85fr; gap:54px; align-items:center; }
+.eyebrow { display:flex; align-items:center; gap:10px; font-size:11px; letter-spacing:.15em; text-transform:uppercase; color:var(--site-primary); font-weight:750; }
+.eyebrow:before { content:""; width:25px; height:1px; background:currentColor; }
+h1,h2,h3,p { margin-top:0; }
+h1 { font-family:var(--site-font-heading); font-size:clamp(48px,6.7vw,82px); line-height:.98; letter-spacing:-.055em; font-weight:500; margin:22px 0 24px; max-width:730px; }
+h1 em { color:var(--site-primary); font-weight:400; }
+.lead { max-width:560px; color:#68665f; font-size:17px; line-height:1.75; }
+.hero-actions { display:flex; gap:12px; flex-wrap:wrap; margin-top:29px; }
+.micro { font-size:11px; color:#77746c; margin-top:20px; }
+.visual { min-height:380px; background:var(--site-secondary); color:var(--site-on-secondary); border-radius:calc(18px * var(--site-radius-scale)); padding:26px; position:relative; overflow:hidden; }
+.visual:after { content:""; position:absolute; width:240px;height:240px;border:1px solid #55534d;border-radius:50%;right:-85px;top:-85px;opacity:var(--site-decoration-opacity); }
+.visual-top { display:flex; justify-content:space-between; align-items:center; font-size:11px; color:#c3c0b6; border-bottom:1px solid #484741; padding-bottom:17px; }
+.status { display:flex; align-items:center; gap:7px; }
+.status:before { content:""; width:6px;height:6px;border-radius:50%;background:#9eb59a; }
+.visual-title { font-family:var(--site-font-heading); font-size:31px; line-height:1.1; margin:28px 0 22px; max-width:280px; font-weight:400; }
+.signal { display:grid; grid-template-columns:1fr auto; gap:12px; align-items:center; padding:15px 0; border-top:1px solid #484741; }
+.signal strong { font-size:13px; font-weight:600; }
+.signal small { display:block; color:#b8b5ac; font-size:11px; margin-top:5px; }
+.signal .num { font-family:var(--site-font-heading); font-size:25px; color:#e6a18f; }
+.section { padding:76px 0; border-top:1px solid #dedbd3; }
+.section-head { display:flex; justify-content:space-between; align-items:end; gap:30px; margin-bottom:34px; }
+.section-head h2 { font-family:var(--site-font-heading); font-size:clamp(34px,4.5vw,52px); line-height:1.04; letter-spacing:-.04em; font-weight:400; margin:13px 0 0; max-width:600px; }
+.section-head p { max-width:390px; font-size:14px; line-height:1.7; color:#68665f; margin:0; }
+.work-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+.work-card { border:1px solid #dedbd3; border-radius:calc(12px * var(--site-radius-scale)); overflow:hidden; background:#fbfaf7; }
+.work-art { min-height:190px; padding:18px; background:#e9e6de; position:relative; overflow:hidden; }
+.work-art.dark { background:#252522; color:#f5f2eb; }
+.art-label { font-size:10px; text-transform:uppercase; letter-spacing:.13em; color:light-dark(#6c6a63,#b8b5ac); }
+.work-art.dark .art-label { color:#c5c1b6; }
+.mock-window { margin-top:22px; background:#f9f8f4; color:#242320; border:1px solid #d5d1c8; border-radius:7px; padding:12px; font-size:11px; line-height:1.55; max-width:260px; }
+.mock-window b { display:block; margin-bottom:6px; }
+.sheet { margin-top:22px; display:grid; grid-template-columns:repeat(3,1fr); border:1px solid #5b5952; border-radius:5px; overflow:hidden; transform:rotate(-3deg); }
+.sheet span { padding:10px 7px; border-right:1px solid #5b5952; border-bottom:1px solid #5b5952; font-size:9px; color:#eeece5; background:#35342f; }
+.sheet span:first-child,.sheet span:nth-child(2),.sheet span:nth-child(3) { background:#4a4942; font-weight:700; }
+.work-content { padding:21px; }
+.tags { display:flex; gap:7px; flex-wrap:wrap; margin-bottom:13px; }
+.tag { font-size:10px; color:#625f57; border:1px solid #dedbd3; padding:5px 8px; border-radius:100px; }
+.work-content h3 { font-family:var(--site-font-heading); font-size:23px; font-weight:400; margin:0 0 9px; letter-spacing:-.02em; }
+.work-content p { color:#625f57; font-size:12px; line-height:1.7; margin:0 0 16px; }
+.metrics { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:15px 0 18px; }
+.metric { border:1px solid #dedbd3; border-radius:8px; padding:12px 10px; background:#fbfaf7; }
+.metric strong { display:block; font-family:var(--site-font-heading); font-size:24px; font-weight:500; letter-spacing:-.03em; color:#20201e; }
+.metric span { display:block; margin-top:4px; font-size:10px; line-height:1.4; color:#625f57; }
+.evidence-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:24px; }
+.evidence-card { border:1px solid #dedbd3; border-radius:10px; padding:18px; background:#fbfaf7; color:#20201e; }
+.evidence-card h3 { font-family:var(--site-font-heading); font-weight:400; font-size:22px; margin:0 0 8px; }
+.evidence-card p { font-size:12px; line-height:1.7; color:#625f57; margin:0; }
+.quote-sample { margin-top:12px; padding:12px 14px; border-left:2px solid var(--site-primary); background:#f0eee8; color:#292824; font-size:12px; line-height:1.7; }
+.text-link { font-size:12px; font-weight:700; color:var(--site-primary); cursor:pointer; background:none; border:0; padding:0; }
+.approach { display:grid; grid-template-columns:.8fr 1.2fr; gap:70px; }
+.approach-intro h2 { font-family:var(--site-font-heading); font-size:clamp(35px,4vw,48px); font-weight:400; line-height:1.06; letter-spacing:-.04em; margin:15px 0 18px; }
+.approach-intro p { color:#625f57; font-size:14px; line-height:1.8; }
+.steps { border-top:1px solid light-dark(#dedbd3,#3d3b37); }
+.step { display:grid; grid-template-columns:45px 1fr; gap:15px; padding:22px 0; border-bottom:1px solid light-dark(#dedbd3,#3d3b37); }
+.step-no { color:var(--site-primary); font-size:11px; font-weight:750; padding-top:4px; }
+.step h3 { font-size:15px; margin:0 0 7px; }
+.step p { color:#625f57; font-size:12px; line-height:1.7; margin:0; max-width:520px; }
+.principles { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
+.principle { padding:22px; border:1px solid light-dark(#dedbd3,#3d3b37); border-radius:calc(10px * var(--site-radius-scale)); }
+.principle .symbol { color:var(--site-primary); font-size:20px; margin-bottom:22px; }
+.principle h3 { font-family:var(--site-font-heading); font-size:22px; font-weight:400; margin:0 0 9px; }
+.principle p { font-size:12px; line-height:1.7; color:#625f57; margin:0; }
+.contact { background:var(--site-secondary); color:var(--site-on-secondary); padding:58px; border-radius:calc(16px * var(--site-radius-scale)); display:grid; grid-template-columns:1fr auto; align-items:center; gap:30px; }
+.contact h2 { font-family:var(--site-font-heading); font-weight:400; font-size:clamp(35px,4.5vw,54px); line-height:1.04; letter-spacing:-.04em; max-width:620px; margin:13px 0; }
+.contact p { color:#bcb9af; font-size:13px; line-height:1.7; max-width:480px; margin:0; }
+.footer { display:flex; justify-content:space-between; gap:20px; padding:25px 0 35px; color:#625f57; font-size:11px; }
+.disclaimer { font-size:10px; color:#625f57; line-height:1.6; margin-top:18px; }
+#contactNote { display:none; margin-top:15px; color:#e7a18e; font-size:12px; }
+@media(max-width:800px) { .navlinks { display:none; } .hero { grid-template-columns:1fr; padding:60px 0; gap:35px; } .visual { min-height:320px; } .section { padding:55px 0; } .section-head { display:block; } .section-head p { margin-top:18px; } .work-grid { grid-template-columns:1fr; } .work-art { min-height:170px; } .approach { grid-template-columns:1fr; gap:30px; } .principles { grid-template-columns:1fr; } .contact { grid-template-columns:1fr; padding:30px; } .footer { flex-direction:column; } }
+@media(min-width:801px) and (max-width:1000px) { .work-grid { grid-template-columns:repeat(2,1fr); } }
+</style>
+</head>
+<body>
+<div id="app">
+  <header class="wrap nav">
+    <a class="brand" href="#home" aria-label="Portfolio home"><span class="brand-mark">VM</span><span>Vartika M. / Reddit Growth</span></a>
+    <nav class="navlinks" aria-label="Main navigation"><a href="#work">Selected work</a><a href="#approach">Approach</a><a href="#principles">Expertise</a></nav>
+    <a class="nav-cta" href="#contact">Let's talk <span aria-hidden="true">↗</span></a>
+  </header>
+  <main>
+    <section class="wrap hero" id="home">
+      <div>
+        <div class="eyebrow">Reddit marketing · Community intelligence</div>
+        <h1>Good marketing starts with <em>listening.</em></h1>
+        <p class="lead">I help brands understand Reddit communities, find the conversations that matter, and build thoughtful campaigns grounded in how people actually talk, search, and make decisions.</p>
+        <div class="hero-actions"><a class="button primary" href="#work">Explore selected work <span aria-hidden="true">↘</span></a><a class="button ghost" href="#contact">Work with me</a></div>
+        <p class="micro">Research-led thinking. Careful execution. Clear reporting.</p>
+      </div>
+      <aside class="visual" aria-label="Portfolio focus areas">
+        <div class="visual-top"><span>THE WORK, AT A GLANCE</span><span class="status">Research-led</span></div>
+        <div class="visual-title">Consistent delivery, backed by real campaign work.</div>
+        <div class="signal"><div><strong>PrepSolution</strong><small>1,000+ comments · Daily delivery</small></div><span class="num">01</span></div>
+        <div class="signal"><div><strong>20+ brand projects</strong><small>Campaign execution · Coordination</small></div><span class="num">02</span></div>
+        <div class="signal"><div><strong>Performance insights</strong><small>Post reach · Engagement · Reporting</small></div><span class="num">03</span></div>
+      </aside>
+    </section>
+
+    <section class="section" id="work"><div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Selected work</div><h2>Campaigns, organized by project.</h2></div><p>A selection of Reddit campaign delivery, post performance evidence, and operational workflows. Results are shown only where the available insights support them.</p></div>
+      <div class="work-grid">
+        <article class="work-card"><div class="work-art"><div class="art-label">Project 01 / Education</div><div class="mock-window"><b>PrepSolution</b>High-volume Reddit campaign support · Daily delivery · Comment tracking</div></div><div class="work-content"><div class="tags"><span class="tag">Largest campaign</span><span class="tag">Daily operations</span></div><h3>PrepSolution</h3><p>My largest campaign to date: more than 1,000 comments delivered across a sustained daily workflow, supported by task tracking and delivery coordination.</p><button class="text-link" data-project="prepsolution">View project details ↗</button></div></article>
+        <article class="work-card"><div class="work-art dark"><div class="art-label">Project 02 / Consumer brand</div><div class="mock-window"><b>Animonlife</b>Multiple Reddit posts · Audience reach and engagement insights</div></div><div class="work-content"><div class="tags"><span class="tag">Major campaign</span><span class="tag">Post analytics</span></div><h3>Animonlife</h3><p>A major campaign with multiple posts reaching thousands of views. The supplied insights show several posts at approximately 6.5K–17K views, with audience geography varying by post.</p><div class="metrics"><div class="metric"><strong>17K</strong><span>Views on one post</span></div><div class="metric"><strong>16K</strong><span>Views on another</span></div><div class="metric"><strong>12.6K</strong><span>Views on another</span></div></div><button class="text-link" data-project="animonlife">View campaign details ↗</button></div></article>
+        <article class="work-card"><div class="work-art dark"><div class="art-label">Project 03 / Multi-brand work</div><div class="sheet"><span>Project</span><span>Workstream</span><span>Focus</span><span>Max Life</span><span>Campaign</span><span>Coordination</span><span>LevelsRX</span><span>Content</span><span>Delivery</span><span>Guesty</span><span>Campaign</span><span>Tracking</span></div></div><div class="work-content"><div class="tags"><span class="tag">20+ brands</span><span class="tag">Campaign operations</span></div><h3>Multi-brand campaign portfolio</h3><p>Additional projects include Max Life Insurance, LevelsRX, Lovescape, Willow, Truoux, and Guesty, alongside 20+ brands overall. Work and evidence are grouped by brand as approvals allow.</p><button class="text-link" data-project="brands">View brand list ↗</button></div></article>
+      </div>
+      <p class="disclaimer">Portfolio note: brand names are included to describe project experience and do not imply endorsement. Public examples should use permission-cleared screenshots, accurate context, and only verified performance figures. Where campaigns involved paid promotion, that context should be disclosed clearly.</p>
+      <div class="section-head" style="margin-top:52px"><div><div class="eyebrow">Campaign evidence</div><h2>Performance snapshots & comment work.</h2></div><p>Metrics below are transcribed from the screenshots you provided. They are post-level observations, not proof of conversions or sales.</p></div>
+      <div class="evidence-grid">
+        <article class="evidence-card"><h3>Animonlife · Post reach</h3><div class="metrics"><div class="metric"><strong>17K</strong><span>Views</span></div><div class="metric"><strong>35.9%</strong><span>US share on this post</span></div><div class="metric"><strong>7.1%</strong><span>Canada share</span></div></div><p>One supplied insight screenshot shows about 17K views in the first 48-hour chart. Its audience breakdown lists the United States at 35.9% and Canada at 7.1%.</p></article>
+        <article class="evidence-card"><h3>Animonlife · US audience reach</h3><div class="metrics"><div class="metric"><strong>16K</strong><span>Views</span></div><div class="metric"><strong>97.4%</strong><span>US share on this post</span></div><div class="metric"><strong>15</strong><span>Comments shown</span></div></div><p>A separate supplied post insight shows about 16K views, with 97.4% of views from the United States, 10 upvotes, and 15 comments.</p></article>
+        <article class="evidence-card"><h3>Animonlife · Additional posts</h3><div class="metrics"><div class="metric"><strong>12.6K</strong><span>Views</span></div><div class="metric"><strong>12K</strong><span>Views</span></div><div class="metric"><strong>6.5K</strong><span>Views</span></div></div><p>Other supplied screenshots show posts at approximately 12.6K, 12K, and 6.5K views. These are separate post totals and should not be added together as unique reach.</p></article>
+        <article class="evidence-card"><h3>Comment samples</h3><p>Selected examples of concise, context-aware replies and practical recommendations from the supplied screenshots.</p><div class="quote-sample">“Don’t buy a big creator CRM yet. I use Billo to get 10–20 clips around one product, test them, then rehire the creators who actually perform.”</div><div class="quote-sample">“Your list mixes VPN apps and proxy vendors for dev QA. Proxy-Cheap is useful for testing, but it’s not really a WireGuard VPN replacement.”</div><p style="margin-top:12px">These are writing samples, not Animonlife-specific comments. Brand attribution should only be added where confirmed.</p></article>
+      </div>
+    </div></section>
+
+    <section class="section" id="approach"><div class="wrap approach">
+      <div class="approach-intro"><div class="eyebrow">How I work</div><h2>Understand the room before joining the conversation.</h2><p>Reddit has its own culture, norms, and expectations. Effective marketing starts with context, not copy-pasting a message into every community.</p></div>
+      <div class="steps">
+        <div class="step"><div class="step-no">01</div><div><h3>Listen & research</h3><p>Understand community rules, recurring questions, audience language, and the context around relevant discussions.</p></div></div>
+        <div class="step"><div class="step-no">02</div><div><h3>Map the opportunity</h3><p>Identify where a brand can genuinely help, which topics matter, and where participation would not be appropriate.</p></div></div>
+        <div class="step"><div class="step-no">03</div><div><h3>Plan & execute</h3><p>Coordinate content and campaign tasks with clear briefs, human review, and respect for community rules and disclosure requirements.</p></div></div>
+        <div class="step"><div class="step-no">04</div><div><h3>Measure & improve</h3><p>Track what can be verified, document learnings, and use evidence to improve the next round of work.</p></div></div>
+      </div>
+    </div></section>
+
+    <section class="section" id="principles"><div class="wrap">
+      <div class="section-head"><div><div class="eyebrow">Areas of focus</div><h2>A practical mix of strategy and execution.</h2></div><p>My work sits at the intersection of understanding communities, organizing campaigns, and making the work easier to evaluate.</p></div>
+      <div class="principles">
+        <article class="principle"><div class="symbol">↗</div><h3>Reddit marketing</h3><p>Campaign planning, community-aware content, and brand participation that adds value to the discussion.</p></article>
+        <article class="principle"><div class="symbol">⌕</div><h3>Community intelligence</h3><p>Audience research, discussion mapping, recurring pain points, and competitor conversation analysis.</p></article>
+        <article class="principle"><div class="symbol">▦</div><h3>Campaign operations</h3><p>Task coordination, tracking sheets, quality checks, workflow documentation, and clear reporting.</p></article>
+      </div>
+    </div></section>
+
+    <section class="section" id="contact"><div class="wrap"><div class="contact"><div><div class="eyebrow">Contact</div><h2>Vartika M.</h2><p>Reddit marketing · Campaign execution · Community research</p><p style="margin-top:16px"><a href="mailto:vartikamanral1@gmail.com">vartikamanral1@gmail.com</a><br><a href="tel:+919873571173">+91 9873571173</a></p></div><div><a class="button primary" id="emailButton" href="mailto:vartikamanral1@gmail.com?subject=Reddit%20marketing%20inquiry">Email me ↗</a></div></div></div></section>
+  </main>
+  <footer class="wrap footer"><span>© <span id="year"></span> Reddit Marketing Portfolio</span><span>Built around real work, clear thinking, and honest evidence.</span></footer>
+</div>
+<dialog id="projectDialog" style="max-width:560px;width:calc(100% - 32px);border:1px solid #777;border-radius:12px;padding:26px;background:#fbfaf7;color:#20201e"><button id="closeDialog" style="float:right;border:0;background:transparent;color:inherit;font-size:22px;cursor:pointer" aria-label="Close">×</button><div class="eyebrow">Case study checklist</div><h2 id="dialogTitle" style="font-family:Georgia,serif;font-weight:400;font-size:30px;margin:15px 0"></h2><p id="dialogText" style="font-size:14px;line-height:1.7;color:#625f57"></p><ul id="dialogList" style="font-size:13px;line-height:1.9;padding-left:20px"></ul><p style="font-size:11px;color:#625f57">Use real, permission-cleared evidence. Do not invent results or publish confidential client or account information.</p><button class="button primary" id="doneDialog">Got it</button></dialog>
+<script>
+const projectDetails = {
+  campaign: { title: "Brand campaign execution", text: "Turn approved examples into a clear story of the work you personally handled.", items: ["Brand and campaign objective (only if disclosure is allowed)", "Selected post/comment screenshots with identifying details reviewed", "Your exact responsibilities and workflow", "Verified outcomes, or a clear note if metrics were not available"] },
+  prepsolution: { title: "PrepSolution — largest campaign", text: "More than 1,000 comments delivered with a daily cadence. This case study will focus on scale, consistency, and the delivery process rather than inventing performance claims.", items: ["1,000+ comments delivered", "Daily task and delivery coordination", "Reddit examples and approved evidence", "Performance results only where verified and attributable"] },
+  animonlife: { title: "Animonlife — major campaign", text: "The supplied Animonlife insights show multiple posts with view totals ranging from approximately 6.5K to 17K. The strongest examples include a 16K-view post whose audience was 97.4% US-based and a separate post with 17K views. These are post-level views, not unique reach or conversion results.", items: ["17K views on one supplied post insight", "16K views on another post, with 97.4% US audience share", "Additional supplied posts at approximately 12.6K, 12K, and 6.5K views", "Comment examples are displayed separately unless confirmed as part of this brand campaign"] },
+  brands: { title: "Multi-brand campaign portfolio", text: "A broader view of brand work across different categories. Each brand can have its own entry when the evidence and disclosure permissions are clear.", items: ["Max Life Insurance", "LevelsRX, Lovescape, Willow, Truoux, and Guesty", "20+ brands overall, as reported by the portfolio owner", "Client names and examples displayed subject to permission"] },
+  research: { title: "Community intelligence", text: "Show how research informed the plan, not just a list of subreddit names.", items: ["Research question and audience", "Communities reviewed and why they were relevant", "Patterns or user needs observed", "Recommendations and limitations"] },
+  operations: { title: "Campaign tracking systems", text: "Use a sanitized spreadsheet view to demonstrate your process and attention to detail.", items: ["What the sheet was used to coordinate", "Status fields and review process", "How errors or follow-ups were handled", "A sample report or workflow improvement, if verifiable"] }
+};
+const dialog = document.getElementById('projectDialog');
+document.querySelectorAll('[data-project]').forEach(button => button.addEventListener('click', () => {
+  const detail = projectDetails[button.dataset.project];
+  document.getElementById('dialogTitle').textContent = detail.title;
+  document.getElementById('dialogText').textContent = detail.text;
+  const list = document.getElementById('dialogList'); list.replaceChildren();
+  detail.items.forEach(item => { const li = document.createElement('li'); li.textContent = item; list.appendChild(li); });
+  dialog.showModal();
+}));
+document.getElementById('closeDialog').addEventListener('click', () => dialog.close());
+document.getElementById('doneDialog').addEventListener('click', () => dialog.close());
+document.getElementById('year').textContent = new Date().getFullYear();
+document.getElementById('emailButton').addEventListener('click', () => {});
+</script>
+</body>
+</html>
