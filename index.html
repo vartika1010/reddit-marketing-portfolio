@@ -6,283 +6,402 @@
 <title>Vartika M. | Reddit Marketing &amp; Growth Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500..700&family=Figtree:wght@400..700&display=swap" rel="stylesheet">
 <style>
 /* ------------------------------------------------------------------
-   Neomorphism tokens
-   One surface colour. Depth comes only from a light shadow (top-left)
-   and a dark shadow (bottom-right). Raised = sticks out, inset = pressed in.
+   Neomorphism system
+   One surface colour, one light source (top-left).
+   - Raised: sticks out of the surface. Used for things you can press
+     (buttons, chips) and for containers (cards, panels).
+   - Well: pressed into the surface. Used for content that sits inside
+     a container (stats, tags, quotes, charts) and for pressed states.
+   Depth steps: raise-1 < raise-2 < raise-3, well-1 < well-2.
+   Orange is reserved for two things: figures and the primary action.
 ------------------------------------------------------------------- */
 :root {
   color-scheme: light;
-  --bg: #e4e8ee;
+  --bg: #e5e8ee;
   --bg-hi: #eef1f6;
-  --bg-lo: #dadfe7;
+  --bg-lo: #d9dee7;
   --light: #ffffff;
-  --shade: #b8c0cd;
-  --ink: #272e3b;
-  --muted: #566073;
-  --accent: #c8431b;
-  --accent-text: #b43a16;
-  --accent-soft: #e8643a;
-  --on-accent: #ffffff;
-  --led: #3f9b6a;
+  --shade: #aab4c4;
+  --ink: #232a37;
+  --muted: #556074;
+  --accent: #c2410c;
+  --accent-hi: #cf4a12;
+  --accent-lo: #ad3507;
+  --accent-text: #a8340a;
 
-  --d: 9px;            /* shadow offset, large surfaces */
-  --b: 18px;           /* shadow blur, large surfaces */
-  --ds: 5px;           /* small surfaces */
-  --bs: 10px;
+  --convex: linear-gradient(145deg, var(--bg-hi), var(--bg-lo));
+  --concave: linear-gradient(145deg, var(--bg-lo), var(--bg-hi));
 
-  --raised: var(--d) var(--d) var(--b) var(--shade), calc(var(--d) * -1) calc(var(--d) * -1) var(--b) var(--light);
-  --raised-sm: var(--ds) var(--ds) var(--bs) var(--shade), calc(var(--ds) * -1) calc(var(--ds) * -1) var(--bs) var(--light);
-  --inset: inset var(--ds) var(--ds) var(--bs) var(--shade), inset calc(var(--ds) * -1) calc(var(--ds) * -1) var(--bs) var(--light);
-  --inset-deep: inset var(--d) var(--d) var(--b) var(--shade), inset calc(var(--d) * -1) calc(var(--d) * -1) var(--b) var(--light);
+  --edge: inset 1px 1px 1px rgba(255,255,255,.8), inset -1px -1px 1px rgba(150,160,180,.18);
+  --raise-1: 4px 4px 9px var(--shade), -4px -4px 9px var(--light), var(--edge);
+  --raise-2: 9px 9px 20px var(--shade), -9px -9px 20px var(--light), var(--edge);
+  --raise-3: 15px 15px 32px var(--shade), -15px -15px 32px var(--light), var(--edge);
+  --well-1: inset 3px 3px 7px var(--shade), inset -3px -3px 7px var(--light);
+  --well-2: inset 7px 7px 14px var(--shade), inset -7px -7px 14px var(--light);
 
-  --font-body: Manrope, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-head: Fraunces, Georgia, "Times New Roman", serif;
+  --font-body: Figtree, ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-head: "Bricolage Grotesque", Figtree, ui-sans-serif, system-ui, sans-serif;
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; font-family: var(--font-body); font-size: 15px; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
+body { margin: 0; font-family: var(--font-body); font-size: 16px; line-height: 1.6; background: var(--bg); color: var(--ink); -webkit-font-smoothing: antialiased; }
 a { color: inherit; text-decoration: none; }
-button, input, textarea { font: inherit; }
-h1, h2, h3, h4, p { margin-top: 0; }
-:focus-visible { outline: 3px solid var(--accent); outline-offset: 4px; border-radius: 14px; }
+button { font: inherit; }
+h1, h2, h3 { font-family: var(--font-head); font-weight: 600; letter-spacing: -.025em; text-wrap: balance; margin: 0; }
+p { margin: 0; text-wrap: pretty; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
 .wrap { width: min(1160px, calc(100% - 48px)); margin: 0 auto; }
 section[id] { scroll-margin-top: 110px; }
 
 /* ---------- Navigation ---------- */
-.nav-shell { position: sticky; top: 0; z-index: 20; padding: 18px 0 10px; background: linear-gradient(var(--bg) 70%, transparent); }
-.nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 12px 14px 12px 14px; border-radius: 999px; background: var(--bg); box-shadow: var(--raised-sm); }
-.brand { display: flex; align-items: center; gap: 12px; font-weight: 800; letter-spacing: -.02em; padding-right: 8px; }
-.brand-mark { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(145deg, var(--bg-hi), var(--bg-lo)); box-shadow: 3px 3px 7px var(--shade), -3px -3px 7px var(--light); color: var(--accent-text); font-weight: 800; font-size: 14px; }
-.navlinks { display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; color: var(--muted); }
-.navlinks a { padding: 10px 16px; border-radius: 999px; transition: box-shadow .2s, color .2s; }
-.navlinks a:hover { color: var(--accent-text); box-shadow: var(--inset); }
+.nav-shell { position: sticky; top: 0; z-index: 20; padding: 18px 0 14px; background: linear-gradient(var(--bg) 72%, transparent); }
+.nav { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 10px 12px; border-radius: 999px; background: var(--convex); box-shadow: 6px 6px 14px var(--shade), -6px -6px 14px var(--light), var(--edge); }
+.brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-head); font-weight: 600; letter-spacing: -.01em; padding-right: 8px; }
+.brand-mark { width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center; background: var(--concave); box-shadow: var(--well-1); font-size: 14px; font-weight: 700; color: var(--ink); }
+.navlinks { display: flex; align-items: center; gap: 6px; font-size: 14px; font-weight: 600; color: var(--muted); }
+.navlinks a { padding: 9px 16px; border-radius: 999px; transition: box-shadow .2s, color .2s; }
+.navlinks a:hover, .navlinks a[aria-current="true"] { color: var(--ink); box-shadow: var(--well-1); }
 
 /* ---------- Buttons ---------- */
-.nav-cta, .button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 13px 22px; border-radius: 999px; border: 0; cursor: pointer; font-size: 13px; font-weight: 700; color: var(--ink); background: linear-gradient(145deg, var(--bg-hi), var(--bg-lo)); box-shadow: var(--raised-sm); transition: box-shadow .2s, color .2s; }
-.nav-cta:hover, .button:hover { color: var(--accent-text); }
-.nav-cta:active, .button:active { box-shadow: var(--inset); background: var(--bg); }
-.button.primary { background: linear-gradient(145deg, var(--accent-soft), var(--accent)); color: var(--on-accent); box-shadow: var(--ds) var(--ds) var(--bs) var(--shade), calc(var(--ds) * -1) calc(var(--ds) * -1) var(--bs) var(--light); }
-.button.primary:hover { color: var(--on-accent); }
-.button.primary:active { background: var(--accent); box-shadow: inset 4px 4px 9px #8f2d0f, inset -4px -4px 9px #ec7a55; }
-.button.ghost { background: var(--bg); }
-.text-link { font-size: 13px; font-weight: 700; color: var(--accent-text); cursor: pointer; background: var(--bg); border: 0; padding: 11px 18px; border-radius: 999px; box-shadow: var(--raised-sm); transition: box-shadow .2s; }
-.text-link:hover { box-shadow: 3px 3px 6px var(--shade), -3px -3px 6px var(--light); }
-.text-link:active { box-shadow: var(--inset); }
-
-/* ---------- Eyebrow: a small status LED set into the surface ---------- */
-.eyebrow { display: inline-flex; align-items: center; gap: 12px; font-size: 13px; font-weight: 700; color: var(--accent-text); }
-.eyebrow:before { content: ""; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px transparent, inset 1px 1px 2px rgba(255,255,255,.5), 0 0 8px rgba(200,67,27,.45); flex: none; }
+.button { display: inline-flex; align-items: center; justify-content: center; padding: 13px 24px; border-radius: 999px; border: 0; cursor: pointer; font-size: 14px; font-weight: 600; color: var(--ink); background: var(--convex); box-shadow: var(--raise-1); transition: box-shadow .15s, color .15s; }
+.button:hover { color: var(--accent-text); }
+.button:active { background: var(--concave); box-shadow: var(--well-1); }
+.button.primary { color: #fff; background: linear-gradient(145deg, var(--accent-hi), var(--accent-lo)); box-shadow: 4px 4px 10px var(--shade), -4px -4px 10px var(--light), inset 1px 1px 1px rgba(255,255,255,.28); }
+.button.primary:hover { color: #fff; }
+.button.primary:active { background: var(--accent-lo); box-shadow: inset 4px 4px 9px #7d2705, inset -3px -3px 7px #d86a3a; }
+.button.small { padding: 10px 18px; font-size: 13px; }
 
 /* ---------- Hero ---------- */
-.hero { padding: 76px 0 84px; display: grid; grid-template-columns: 1.1fr .9fr; gap: 64px; align-items: center; }
-h1 { font-family: var(--font-head); font-size: clamp(46px, 6.4vw, 80px); line-height: 1; letter-spacing: -.035em; font-weight: 500; margin: 26px 0 26px; max-width: 730px; text-shadow: 2px 2px 3px var(--light), -1px -1px 2px rgba(150,160,178,.45); }
-h1 em { font-weight: 400; }
-.lead { max-width: 560px; color: var(--muted); font-size: 17px; line-height: 1.75; }
-.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 34px; }
-.micro { font-size: 13px; color: var(--muted); margin-top: 28px; }
+.hero { padding: 80px 0 88px; display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 72px; align-items: center; }
+h1 { font-size: clamp(44px, 6vw, 78px); line-height: 1.02; letter-spacing: -.035em; max-width: 12em; }
+.lead { margin-top: 26px; max-width: 540px; color: var(--muted); font-size: 17px; line-height: 1.7; }
+.hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 36px; }
 
-.visual { position: relative; padding: 30px; border-radius: 36px; background: linear-gradient(145deg, var(--bg-hi), var(--bg-lo)); box-shadow: 14px 14px 30px var(--shade), -14px -14px 30px var(--light); }
-.dial { position: absolute; top: -26px; right: 28px; width: 76px; height: 76px; border-radius: 50%; background: var(--bg); box-shadow: 6px 6px 12px var(--shade), -6px -6px 12px var(--light); display: grid; place-items: center; }
-.dial:before { content: ""; width: 50px; height: 50px; border-radius: 50%; box-shadow: inset 4px 4px 8px var(--shade), inset -4px -4px 8px var(--light); }
-.dial:after { content: ""; position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 10px rgba(200,67,27,.55); }
-.visual-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; font-size: 13px; font-weight: 700; color: var(--muted); padding-right: 70px; }
-.status { display: inline-flex; align-items: center; gap: 8px; padding: 7px 14px; border-radius: 999px; box-shadow: var(--inset); font-size: 12px; white-space: nowrap; }
-.status:before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--led); box-shadow: 0 0 6px rgba(63,155,106,.7); }
-.visual-title { font-family: var(--font-head); font-size: 31px; line-height: 1.15; margin: 30px 0 24px; max-width: 300px; font-weight: 500; letter-spacing: -.02em; }
-.signal { display: grid; grid-template-columns: auto 1fr; gap: 16px; align-items: center; padding: 16px 18px; margin-top: 14px; border-radius: 22px; box-shadow: var(--inset); }
-.signal .ico { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(145deg, var(--bg-hi), var(--bg-lo)); box-shadow: 4px 4px 8px var(--shade), -4px -4px 8px var(--light); color: var(--accent-text); }
-.signal .ico svg { width: 21px; height: 21px; }
-.signal strong { font-size: 15px; font-weight: 700; }
-.signal small { display: block; color: var(--muted); font-size: 13px; margin-top: 4px; }
+.glance { display: grid; gap: 16px; padding: 22px; border-radius: 36px; background: var(--convex); box-shadow: var(--raise-3); }
+.stat { display: grid; grid-template-columns: 140px 1fr; gap: 16px; align-items: center; padding: 20px 22px; border-radius: 24px; background: var(--concave); box-shadow: var(--well-1); }
+.stat strong { font-family: var(--font-head); font-size: 34px; font-weight: 600; line-height: 1; letter-spacing: -.03em; color: var(--accent-text); white-space: nowrap; font-variant-numeric: tabular-nums; }
+.stat span { font-size: 14px; line-height: 1.5; color: var(--muted); }
 
 /* ---------- Sections ---------- */
 .section { padding: 64px 0; }
-.section-head { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin-bottom: 44px; }
-.section-head h2 { font-family: var(--font-head); font-size: clamp(32px, 4.3vw, 50px); line-height: 1.06; letter-spacing: -.03em; font-weight: 500; margin: 18px 0 0; max-width: 620px; text-shadow: 2px 2px 3px var(--light), -1px -1px 2px rgba(150,160,178,.4); }
-.section-head p { max-width: 400px; font-size: 14px; line-height: 1.75; color: var(--muted); margin: 0; }
+.section-head { display: flex; justify-content: space-between; align-items: end; gap: 40px; margin-bottom: 40px; }
+.section-head h2 { font-size: clamp(30px, 3.8vw, 44px); line-height: 1.08; max-width: 620px; }
+.section-head p { max-width: 380px; font-size: 15px; line-height: 1.7; color: var(--muted); }
 
-/* ---------- Work cards ---------- */
-.work-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; align-items: start; }
-.work-card { border-radius: 30px; padding: 16px; background: var(--bg); box-shadow: var(--raised); }
-.work-art { min-height: 200px; padding: 20px; border-radius: 22px; background: var(--bg); box-shadow: var(--inset-deep); position: relative; overflow: hidden; }
-.art-label { font-size: 12px; font-weight: 700; color: var(--muted); }
-.mock-window { margin-top: 24px; background: linear-gradient(145deg, var(--bg-hi), var(--bg-lo)); color: var(--ink); border-radius: 16px; padding: 14px 16px; font-size: 12.5px; line-height: 1.6; max-width: 270px; box-shadow: 5px 5px 10px var(--shade), -5px -5px 10px var(--light); }
-.mock-window b { display: block; margin-bottom: 6px; font-size: 14px; }
-.sheet { margin-top: 24px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; transform: rotate(-2deg); }
-.sheet span { padding: 10px 8px; font-size: 11px; color: var(--ink); background: linear-gradient(145deg, var(--bg-hi), var(--bg-lo)); border-radius: 10px; box-shadow: 3px 3px 6px var(--shade), -3px -3px 6px var(--light); }
-.sheet span:nth-child(-n+3) { color: var(--accent-text); font-weight: 800; }
-.work-content { padding: 24px 8px 10px; }
+/* ---------- Work ---------- */
+.work-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.work-card { display: flex; flex-direction: column; gap: 6px; padding: 14px; border-radius: 32px; background: var(--convex); box-shadow: var(--raise-2); }
+.work-card.wide { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 14px; }
+.work-art { min-height: 250px; padding: 24px; border-radius: 22px; background: var(--concave); box-shadow: var(--well-2); display: flex; flex-direction: column; justify-content: center; }
+.work-content { display: flex; flex-direction: column; flex: 1; padding: 20px 14px 12px; }
+.work-content h3 { font-size: 26px; line-height: 1.15; margin: 0 0 10px; }
+.work-content p { color: var(--muted); font-size: 15px; line-height: 1.7; margin-bottom: 22px; max-width: 52ch; }
+.work-content .button { align-self: flex-start; margin-top: auto; }
 .tags { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
-.tag { font-size: 12px; font-weight: 600; color: var(--muted); padding: 6px 12px; border-radius: 999px; box-shadow: inset 3px 3px 6px var(--shade), inset -3px -3px 6px var(--light); }
-.work-content h3 { font-family: var(--font-head); font-size: 25px; font-weight: 500; margin: 0 0 10px; letter-spacing: -.02em; }
-.work-content h4 { font-size: 13px; font-weight: 700; margin: 0 0 12px; color: var(--muted); }
-.work-content p { color: var(--muted); font-size: 13.5px; line-height: 1.75; margin: 0 0 18px; }
+.tag { font-size: 12.5px; font-weight: 600; color: var(--muted); padding: 5px 13px; border-radius: 999px; box-shadow: var(--well-1); }
 
-.metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 18px 0 22px; }
-.metric { border-radius: 18px; padding: 14px 10px; text-align: center; box-shadow: var(--inset); }
-.metric strong { display: block; font-family: var(--font-head); font-size: 25px; font-weight: 500; letter-spacing: -.02em; color: var(--accent-text); }
-.metric span { display: block; margin-top: 4px; font-size: 11.5px; line-height: 1.4; color: var(--muted); }
+.bignum { font-family: var(--font-head); font-size: clamp(56px, 7vw, 84px); font-weight: 600; line-height: 1; letter-spacing: -.04em; color: var(--accent-text); text-align: center; }
+.art-cap { margin-top: 12px; font-size: 14px; color: var(--muted); text-align: center; }
 
-.disclaimer { font-size: 12.5px; color: var(--muted); line-height: 1.7; margin: 34px 4px 0; padding: 16px 20px; border-radius: 20px; box-shadow: var(--inset); }
+.posts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.post { padding: 20px 18px; border-radius: 20px; background: var(--convex); box-shadow: var(--raise-1); }
+.post h4 { margin: 0 0 12px; font-size: 14px; font-weight: 700; color: var(--muted); }
+.post strong { display: block; font-family: var(--font-head); font-size: clamp(34px, 4.2vw, 48px); font-weight: 600; line-height: 1; letter-spacing: -.03em; color: var(--accent-text); white-space: nowrap; }
+.post span { display: block; margin-top: 6px; font-size: 13px; color: var(--muted); }
+.post p { margin-top: 14px; padding-top: 14px; font-size: 14px; font-weight: 600; box-shadow: inset 0 3px 3px -3px var(--shade); }
+
+.chart { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; justify-items: center; }
+.bar { display: flex; flex-direction: column; align-items: center; gap: 10px; width: 100%; }
+.track { width: 100%; max-width: 38px; height: 130px; padding: 4px; border-radius: 999px; box-shadow: var(--well-1); display: flex; align-items: flex-end; }
+.fill { width: 100%; height: calc(var(--v) * 1%); min-height: 24px; border-radius: 999px; background: var(--convex); box-shadow: 2px 2px 4px var(--shade), -2px -2px 4px var(--light), var(--edge); }
+.bar:first-child .fill { background: linear-gradient(145deg, var(--accent-hi), var(--accent-lo)); box-shadow: 2px 2px 4px var(--shade), -2px -2px 4px var(--light), inset 1px 1px 1px rgba(255,255,255,.3); }
+.bar span { font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; }
+.chart-cap { margin-top: 18px; font-size: 13px; color: var(--muted); text-align: center; }
+
+.chips { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: 10px; }
+.chip { padding: 8px 14px; border-radius: 999px; font-size: 13px; font-weight: 600; background: var(--convex); box-shadow: 3px 3px 6px var(--shade), -3px -3px 6px var(--light), var(--edge); }
+
+.disclaimer { margin-top: 32px; padding: 16px 22px; border-radius: 20px; box-shadow: var(--well-1); font-size: 13px; line-height: 1.7; color: var(--muted); }
 
 /* ---------- Evidence ---------- */
-.evidence-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 34px; margin-top: 8px; }
-.evidence-card { border-radius: 30px; padding: 26px; background: var(--bg); box-shadow: var(--raised); }
-.evidence-card h3 { font-family: var(--font-head); font-weight: 500; font-size: 23px; margin: 0 0 6px; letter-spacing: -.02em; }
-.evidence-card p { font-size: 13.5px; line-height: 1.75; color: var(--muted); margin: 0; }
-.quote-sample { margin-top: 16px; padding: 16px 18px; border-radius: 18px; box-shadow: var(--inset); color: var(--ink); font-size: 13.5px; line-height: 1.75; position: relative; border-left: 0; }
-.quote-sample:before { content: ""; position: absolute; left: 0; top: 18px; bottom: 18px; width: 4px; border-radius: 4px; background: var(--accent); }
-.quote-sample { padding-left: 24px; }
+.evidence-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
+.evidence-card { padding: 28px; border-radius: 32px; background: var(--convex); box-shadow: var(--raise-2); }
+.evidence-card.wide { grid-column: 1 / -1; }
+.evidence-card h3 { font-size: 22px; margin-bottom: 18px; }
+.evidence-card p { font-size: 15px; line-height: 1.7; color: var(--muted); }
+.metrics.two { grid-template-columns: repeat(2, 1fr); }
+.metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 20px; }
+.metric { padding: 16px 10px; border-radius: 18px; text-align: center; background: var(--concave); box-shadow: var(--well-1); }
+.metric strong { display: block; font-family: var(--font-head); font-size: 28px; font-weight: 600; letter-spacing: -.02em; color: var(--accent-text); font-variant-numeric: tabular-nums; }
+.metric span { display: block; margin-top: 4px; font-size: 12.5px; line-height: 1.4; color: var(--muted); }
+.quotes { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; margin: 20px 0; }
+.quote { position: relative; margin: 0; padding: 18px 22px 18px 28px; border-radius: 20px; background: var(--concave); box-shadow: var(--well-1); font-size: 15px; line-height: 1.7; }
+.quote:before { content: ""; position: absolute; left: 12px; top: 18px; bottom: 18px; width: 4px; border-radius: 4px; background: linear-gradient(var(--accent-hi), var(--accent-lo)); }
 
 /* ---------- Approach ---------- */
-.approach { display: grid; grid-template-columns: .8fr 1.2fr; gap: 72px; }
-.approach-intro h2 { font-family: var(--font-head); font-size: clamp(34px, 4vw, 48px); font-weight: 500; line-height: 1.08; letter-spacing: -.03em; margin: 18px 0 20px; text-shadow: 2px 2px 3px var(--light), -1px -1px 2px rgba(150,160,178,.4); }
-.approach-intro p { color: var(--muted); font-size: 15px; line-height: 1.8; }
-.steps { display: grid; gap: 22px; }
-.step { display: grid; grid-template-columns: 52px 1fr; gap: 20px; align-items: start; padding: 22px; border-radius: 26px; box-shadow: var(--raised-sm); }
-.step-no { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; box-shadow: var(--inset); color: var(--accent-text); font-size: 14px; font-weight: 800; }
-.step h3 { font-size: 16px; font-weight: 700; margin: 4px 0 8px; }
-.step p { color: var(--muted); font-size: 13.5px; line-height: 1.75; margin: 0; max-width: 520px; }
+.approach { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 72px; }
+.approach-intro h2 { font-size: clamp(32px, 3.8vw, 44px); line-height: 1.08; margin-bottom: 20px; }
+.approach-intro p { color: var(--muted); font-size: 16px; line-height: 1.75; max-width: 44ch; }
+.steps { position: relative; display: grid; gap: 22px; }
+.steps:before { content: ""; position: absolute; left: 43px; top: 40px; bottom: 40px; width: 6px; border-radius: 6px; box-shadow: var(--well-1); }
+.step { position: relative; display: grid; grid-template-columns: 52px 1fr; gap: 20px; align-items: start; padding: 20px; border-radius: 26px; background: var(--convex); box-shadow: var(--raise-1); }
+.step-no { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: var(--concave); box-shadow: var(--well-1); font-family: var(--font-head); font-size: 20px; font-weight: 600; color: var(--muted); }
+.step h3 { font-size: 20px; margin: 2px 0 6px; }
+.step p { color: var(--muted); font-size: 15px; line-height: 1.7; max-width: 52ch; }
 
 /* ---------- Areas of focus ---------- */
-.principles { display: grid; grid-template-columns: repeat(3, 1fr); gap: 34px; }
-.principle { padding: 28px; border-radius: 30px; box-shadow: var(--raised); }
-.principle .symbol { width: 56px; height: 56px; border-radius: 50%; display: grid; place-items: center; box-shadow: var(--inset); color: var(--accent-text); font-size: 22px; margin-bottom: 26px; }
-.principle h3 { font-family: var(--font-head); font-size: 23px; font-weight: 500; margin: 0 0 10px; letter-spacing: -.02em; }
-.principle p { font-size: 13.5px; line-height: 1.75; color: var(--muted); margin: 0; }
+.focus { display: grid; grid-template-columns: repeat(3, 1fr); padding: 12px; border-radius: 32px; background: var(--convex); box-shadow: var(--raise-2); }
+.focus article { position: relative; padding: 28px; }
+.focus article + article:before { content: ""; position: absolute; left: 0; top: 28px; bottom: 28px; width: 4px; border-radius: 4px; box-shadow: inset 1px 1px 2px var(--shade), inset -1px -1px 2px var(--light); }
+.focus h3 { font-size: 22px; margin-bottom: 10px; }
+.focus p { font-size: 15px; line-height: 1.7; color: var(--muted); }
 
 /* ---------- Contact ---------- */
-.contact { padding: 56px; border-radius: 40px; display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 36px; box-shadow: 14px 14px 30px var(--shade), -14px -14px 30px var(--light); background: linear-gradient(145deg, var(--bg-hi), var(--bg-lo)); }
-.contact h2 { font-family: var(--font-head); font-weight: 500; font-size: clamp(36px, 4.5vw, 56px); line-height: 1.04; letter-spacing: -.03em; max-width: 620px; margin: 18px 0 12px; }
-.contact p { color: var(--muted); font-size: 14px; line-height: 1.7; max-width: 480px; margin: 0; }
-.contact-details { margin-top: 22px; display: inline-grid; gap: 4px; padding: 16px 22px; border-radius: 20px; box-shadow: var(--inset); font-size: 14px; font-weight: 600; line-height: 1.9; }
+.contact { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 36px; padding: 56px; border-radius: 40px; background: var(--convex); box-shadow: var(--raise-3); }
+.contact h2 { font-size: clamp(34px, 4.5vw, 54px); line-height: 1.05; margin-bottom: 12px; }
+.contact p { color: var(--muted); font-size: 16px; max-width: 48ch; }
+.contact-details { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 28px; }
+.contact-details a { padding: 11px 20px; border-radius: 999px; box-shadow: var(--well-1); font-size: 14px; font-weight: 600; transition: color .15s; }
 .contact-details a:hover { color: var(--accent-text); }
-.footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px 0 44px; color: var(--muted); font-size: 12.5px; }
+.footer { display: flex; justify-content: space-between; gap: 20px; padding: 36px 0 48px; color: var(--muted); font-size: 13px; }
+.footer a:hover { color: var(--ink); }
 
 /* ---------- Dialog ---------- */
-dialog { max-width: 580px; width: calc(100% - 32px); border: 0; border-radius: 32px; padding: 32px; background: var(--bg); color: var(--ink); box-shadow: 16px 16px 36px rgba(110,122,142,.55), -12px -12px 28px rgba(255,255,255,.7); }
-dialog::backdrop { background: rgba(228,232,238,.7); backdrop-filter: blur(6px); }
-.dialog-close { float: right; width: 42px; height: 42px; border: 0; border-radius: 50%; cursor: pointer; font-size: 22px; line-height: 1; color: var(--ink); background: linear-gradient(145deg, var(--bg-hi), var(--bg-lo)); box-shadow: 4px 4px 8px var(--shade), -4px -4px 8px var(--light); }
-.dialog-close:active { box-shadow: var(--inset); }
-#dialogTitle { font-family: var(--font-head); font-weight: 500; font-size: 30px; margin: 18px 0 14px; letter-spacing: -.02em; }
-#dialogText { font-size: 14px; line-height: 1.75; color: var(--muted); }
-#dialogList { font-size: 13.5px; line-height: 1.8; margin: 18px 0; padding: 18px 20px 18px 38px; border-radius: 20px; box-shadow: var(--inset); }
+dialog { max-width: 560px; width: calc(100% - 32px); border: 0; border-radius: 32px; padding: 30px; background: var(--convex); color: var(--ink); box-shadow: var(--raise-3); }
+dialog[open] { animation: pop .18s ease-out; }
+@keyframes pop { from { opacity: 0; transform: translateY(8px) scale(.98); } to { opacity: 1; transform: none; } }
+dialog::backdrop { background: rgba(229,232,238,.72); backdrop-filter: blur(6px); }
+.dialog-close { float: right; width: 42px; height: 42px; border: 0; border-radius: 50%; cursor: pointer; font-size: 22px; line-height: 1; color: var(--ink); background: var(--convex); box-shadow: var(--raise-1); transition: box-shadow .15s; }
+.dialog-close:active { background: var(--concave); box-shadow: var(--well-1); }
+#dialogTitle { font-size: 28px; line-height: 1.15; margin: 4px 0 14px; max-width: 18em; }
+#dialogText { font-size: 15px; line-height: 1.7; color: var(--muted); }
+#dialogList { font-size: 14.5px; line-height: 1.7; margin: 20px 0; padding: 18px 22px 18px 40px; border-radius: 20px; background: var(--concave); box-shadow: var(--well-1); }
 #dialogList li + li { margin-top: 6px; }
-.dialog-note { font-size: 12.5px; color: var(--muted); line-height: 1.7; margin-bottom: 22px; }
+.dialog-note { font-size: 13px; color: var(--muted); line-height: 1.7; margin-bottom: 22px; }
 
 /* ---------- Responsive ---------- */
-@media (max-width: 1000px) and (min-width: 801px) { .work-grid { grid-template-columns: repeat(2, 1fr); } .principles { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 900px) {
+  .hero { grid-template-columns: 1fr; gap: 48px; padding: 48px 0 56px; }
+  .approach { grid-template-columns: 1fr; gap: 36px; }
+}
 @media (max-width: 800px) {
-  :root { --d: 6px; --b: 13px; --ds: 4px; --bs: 8px; }
+  :root {
+    --raise-2: 6px 6px 14px var(--shade), -6px -6px 14px var(--light), var(--edge);
+    --raise-3: 10px 10px 22px var(--shade), -10px -10px 22px var(--light), var(--edge);
+    --well-2: inset 5px 5px 10px var(--shade), inset -5px -5px 10px var(--light);
+  }
   .wrap { width: calc(100% - 32px); }
   .navlinks { display: none; }
-  .brand span:last-child { font-size: 14px; }
-  .hero { grid-template-columns: 1fr; padding: 48px 0 56px; gap: 56px; }
+  .brand span:last-child { font-size: 15px; }
   .section { padding: 44px 0; }
-  .section-head { display: block; margin-bottom: 32px; }
-  .section-head p { margin-top: 18px; }
-  .work-grid, .evidence-grid, .principles { grid-template-columns: 1fr; gap: 28px; }
-  .approach { grid-template-columns: 1fr; gap: 36px; }
-  .contact { grid-template-columns: 1fr; padding: 32px 26px; }
-  .visual { padding: 24px; }
-  .footer { flex-direction: column; }
+  .section-head { display: block; margin-bottom: 28px; }
+  .section-head p { margin-top: 14px; }
+  .work-grid, .evidence-grid, .quotes { grid-template-columns: 1fr; gap: 26px; }
+  .work-card.wide { grid-template-columns: 1fr; }
+  .evidence-card { padding: 22px; }
+  .stat { grid-template-columns: 112px 1fr; padding: 18px; }
+  .stat strong { font-size: 28px; }
+  .steps:before { left: 39px; }
+  .focus { grid-template-columns: 1fr; }
+  .focus article { padding: 22px; }
+  .focus article + article:before { left: 22px; right: 22px; top: 0; bottom: auto; width: auto; height: 4px; }
+  .contact { grid-template-columns: 1fr; padding: 32px 24px; gap: 28px; }
+  .footer { flex-direction: column; gap: 8px; }
 }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { transition: none !important; } }
+@media (max-width: 420px) {
+  .posts { grid-template-columns: 1fr; }
+  .metrics { gap: 8px; }
+  .metric strong { font-size: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  * { transition: none !important; }
+  dialog[open] { animation: none; }
+}
 </style>
 </head>
 <body>
-<div id="app">
   <div class="nav-shell">
     <header class="wrap nav">
-      <a class="brand" href="#home" aria-label="Portfolio home"><span class="brand-mark">VM</span><span>Vartika M. / Reddit Growth</span></a>
+      <a class="brand" href="#home" aria-label="Portfolio home"><span class="brand-mark">VM</span><span>Vartika M.</span></a>
       <nav class="navlinks" aria-label="Main navigation"><a href="#work">Selected work</a><a href="#approach">Approach</a><a href="#principles">Expertise</a></nav>
-      <a class="nav-cta" href="#contact">Let's talk <span aria-hidden="true">↗</span></a>
+      <a class="button small" href="#contact">Let's talk</a>
     </header>
   </div>
+
   <main>
     <section class="wrap hero" id="home">
       <div>
-        <div class="eyebrow">Reddit marketing · Community intelligence · SEO/GEO</div>
-        <h1>Good marketing starts with <em>listening.</em></h1>
-        <p class="lead">I help B2B SaaS, technology, and consumer brands grow visibility through Reddit marketing, community research, audience-led content, and search-aware campaign execution. My approach combines careful research, authentic participation, organized delivery, and evidence-led reporting.</p>
-        <div class="hero-actions"><a class="button primary" href="#work">Explore selected work <span aria-hidden="true">↘</span></a><a class="button ghost" href="#contact">Work with me</a></div>
-        <p class="micro">Research-led thinking. Careful execution. Clear reporting.</p>
+        <h1>Good marketing starts with listening.</h1>
+        <p class="lead">I help B2B SaaS, technology, and consumer brands grow their visibility through Reddit marketing, community research, audience-led content, and search-aware campaign execution. Careful research, authentic participation, organized delivery, and evidence-led reporting.</p>
+        <div class="hero-actions"><a class="button primary" href="#work">See selected work</a><a class="button" href="#contact">Work with me</a></div>
       </div>
-      <aside class="visual" aria-label="Portfolio focus areas">
-        <span class="dial" aria-hidden="true"></span>
-        <div class="visual-top"><span>The work, at a glance</span><span class="status">Research-led</span></div>
-        <div class="visual-title">Consistent delivery, backed by real campaign work.</div>
-        <div class="signal"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span><div><strong>PrepSolution</strong><small>1,000+ comments · Daily delivery</small></div></div>
-        <div class="signal"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="2"/><rect x="14" y="3" width="7" height="7" rx="2"/><rect x="3" y="14" width="7" height="7" rx="2"/><rect x="14" y="14" width="7" height="7" rx="2"/></svg></span><div><strong>20+ brand projects</strong><small>Campaign execution · Coordination</small></div></div>
-        <div class="signal"><span class="ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></span><div><strong>Performance insights</strong><small>Post reach · Engagement · Reporting</small></div></div>
+      <aside class="glance" aria-label="Portfolio highlights">
+        <div class="stat"><strong>1,000+</strong><span>comments delivered on PrepSolution, my largest campaign</span></div>
+        <div class="stat"><strong>20+</strong><span>brand projects across B2B SaaS, technology, and consumer</span></div>
+        <div class="stat"><strong>200K+</strong><span>views on a single r/singularity post for Autumn AI</span></div>
       </aside>
     </section>
 
     <section class="section" id="work"><div class="wrap">
-      <div class="section-head"><div><div class="eyebrow">Selected work</div><h2>Campaigns, organized by project.</h2></div><p>A selection of Reddit campaign delivery, post performance evidence, and operational workflows. Results are shown only where the available insights support them.</p></div>
+      <div class="section-head"><h2>Selected work</h2><p>Reddit campaign delivery, post performance, and the workflows behind them. Results appear only where the available insights support them.</p></div>
       <div class="work-grid">
-        <article class="work-card"><div class="work-art"><div class="art-label">Project 01 / Education</div><div class="mock-window"><b>PrepSolution</b>High-volume Reddit campaign support · Daily delivery · Comment tracking</div></div><div class="work-content"><div class="tags"><span class="tag">Largest campaign</span><span class="tag">Daily operations</span></div><h3>PrepSolution</h3><p>My largest campaign to date: more than 1,000 comments delivered across a sustained daily workflow, supported by task tracking and delivery coordination.</p><button class="text-link" data-project="prepsolution">View project details ↗</button></div></article>
-        <article class="work-card"><div class="work-art"><div class="art-label">Project 02 / Consumer brand</div><div class="mock-window"><b>Animonlife</b>Multiple Reddit posts · Audience reach and engagement insights</div></div><div class="work-content"><div class="tags"><span class="tag">Major campaign</span><span class="tag">Post analytics</span></div><h3>Animonlife</h3><p>A major campaign with multiple posts reaching thousands of views. The supplied insights show several posts at approximately 6.5K–17K views, with audience geography varying by post.</p><div class="metrics"><div class="metric"><strong>17K</strong><span>Views on one post</span></div><div class="metric"><strong>16K</strong><span>Views on another</span></div><div class="metric"><strong>12.6K</strong><span>Views on another</span></div></div><button class="text-link" data-project="animonlife">View campaign details ↗</button></div></article>
-        <article class="work-card"><div class="work-art"><div class="art-label">Project 03 / Multi-brand work</div><div class="sheet"><span>Project</span><span>Workstream</span><span>Focus</span><span>Max Life</span><span>Campaign</span><span>Coordination</span><span>LevelsRX</span><span>Content</span><span>Delivery</span><span>Guesty</span><span>Campaign</span><span>Tracking</span></div></div><div class="work-content"><div class="tags"><span class="tag">20+ brands</span><span class="tag">Campaign operations</span></div><h3>Multi-brand campaign portfolio</h3><p>Brand experience spans B2B SaaS, technology, consumer, creator, lifestyle, and service businesses. Projects include Max Life Insurance, LevelsRX, Lovescape, Willow, Truoux, Guesty, Telnyx, Billo, WHOP, Vograce, Hisense, June Homes, Outpost, Citeworks, Google BigQuery, NetSuite, Skyvia, Proxy-Cheap, IPRoyal, Decodo, Bright Data, Tourism, and Elmo, alongside other brands across 20+ projects. Work and evidence are grouped by brand as approvals allow.</p><h4>Recent brand experience</h4><div class="tags" aria-label="Recent brands"><span class="tag">Vograce</span><span class="tag">Hisense</span><span class="tag">June Homes</span><span class="tag">Outpost</span><span class="tag">Citeworks</span><span class="tag">BigQuery</span><span class="tag">NetSuite</span><span class="tag">Skyvia</span><span class="tag">Telnyx</span><span class="tag">Billo</span><span class="tag">WHOP</span><span class="tag">Max Life</span><span class="tag">Guesty</span><span class="tag">LevelsRX</span><span class="tag">Proxy-Cheap</span><span class="tag">IPRoyal</span><span class="tag">Decodo</span><span class="tag">Bright Data</span><span class="tag">Tourism</span><span class="tag">Elmo</span></div><button class="text-link" data-project="brands">View brand list ↗</button></div></article>
-      </div>
-      <p class="disclaimer">Portfolio note: brand names are included to describe project experience and do not imply endorsement. Public examples should use permission-cleared screenshots, accurate context, and only verified performance figures. Where campaigns involved paid promotion, that context should be disclosed clearly.</p>
+        <article class="work-card wide">
+          <div class="work-content">
+            <div class="tags"><span class="tag">Top-performing posts</span><span class="tag">r/singularity</span><span class="tag">r/investing</span></div>
+            <h3>Autumn AI</h3>
+            <p>Two posts passed 100K views: one on r/singularity with 200K+ views and 200 upvotes, and one on r/investing with 100K+ views and 75 upvotes.</p>
+            <button class="button small" data-project="autumnai">View campaign details</button>
+          </div>
+          <div class="work-art">
+            <div class="posts">
+              <div class="post"><h4>r/singularity</h4><strong>200K+</strong><span>views</span><p>200 upvotes</p></div>
+              <div class="post"><h4>r/investing</h4><strong>100K+</strong><span>views</span><p>75 upvotes</p></div>
+            </div>
+          </div>
+        </article>
 
-      <div class="section-head" style="margin-top:72px"><div><div class="eyebrow">Campaign evidence</div><h2>Performance snapshots &amp; comment work.</h2></div><p>Metrics below are transcribed from the screenshots you provided. They are post-level observations, not proof of conversions or sales.</p></div>
+        <article class="work-card">
+          <div class="work-art"><div class="bignum">1,000+</div><div class="art-cap">comments delivered, daily</div></div>
+          <div class="work-content">
+            <div class="tags"><span class="tag">Education</span><span class="tag">Largest campaign</span><span class="tag">Daily operations</span></div>
+            <h3>PrepSolution</h3>
+            <p>My largest campaign to date: more than 1,000 comments delivered across a sustained daily workflow, supported by task tracking and delivery coordination.</p>
+            <button class="button small" data-project="prepsolution">View details</button>
+          </div>
+        </article>
+
+        <article class="work-card">
+          <div class="work-art">
+            <div class="chart" role="img" aria-label="Views on five Animonlife posts: 17K, 16K, 12.6K, 12K, and 6.5K">
+              <div class="bar" aria-hidden="true"><div class="track"><div class="fill" style="--v:100"></div></div><span>17K</span></div>
+              <div class="bar" aria-hidden="true"><div class="track"><div class="fill" style="--v:94"></div></div><span>16K</span></div>
+              <div class="bar" aria-hidden="true"><div class="track"><div class="fill" style="--v:74"></div></div><span>12.6K</span></div>
+              <div class="bar" aria-hidden="true"><div class="track"><div class="fill" style="--v:71"></div></div><span>12K</span></div>
+              <div class="bar" aria-hidden="true"><div class="track"><div class="fill" style="--v:38"></div></div><span>6.5K</span></div>
+            </div>
+            <div class="chart-cap">Views per post. Separate totals, not unique reach.</div>
+          </div>
+          <div class="work-content">
+            <div class="tags"><span class="tag">Consumer brand</span><span class="tag">Major campaign</span><span class="tag">Post analytics</span></div>
+            <h3>Animonlife</h3>
+            <p>A major campaign across multiple posts, with individual posts reaching roughly 6.5K to 17K views. Audience geography varies by post.</p>
+            <button class="button small" data-project="animonlife">View campaign details</button>
+          </div>
+        </article>
+
+        <article class="work-card wide">
+          <div class="work-content">
+            <div class="tags"><span class="tag">20+ brands</span><span class="tag">Campaign operations</span></div>
+            <h3>Multi-brand campaign portfolio</h3>
+            <p>Experience across B2B SaaS, technology, consumer, creator, lifestyle, and service businesses. Hisense was high-volume post and comment work. Client names and examples appear only where permission allows.</p>
+          </div>
+          <div class="work-art">
+            <ul class="chips" aria-label="Brands worked with">
+              <li class="chip">Autumn AI</li><li class="chip">Max Life</li><li class="chip">LevelsRX</li><li class="chip">Lovescape</li><li class="chip">Willow</li><li class="chip">Truoux</li><li class="chip">Guesty</li><li class="chip">Telnyx</li><li class="chip">Billo</li><li class="chip">WHOP</li><li class="chip">Vograce</li><li class="chip">Hisense</li><li class="chip">June Homes</li><li class="chip">Outpost</li><li class="chip">Citeworks</li><li class="chip">Google BigQuery</li><li class="chip">NetSuite</li><li class="chip">Skyvia</li><li class="chip">Proxy-Cheap</li><li class="chip">IPRoyal</li><li class="chip">Decodo</li><li class="chip">Bright Data</li><li class="chip">Tourism</li><li class="chip">Elmo</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+      <p class="disclaimer">Brand names describe project experience and do not imply endorsement. Only verified figures are shown, examples are used with permission, and paid promotion is disclosed where it applied.</p>
+
+      <div class="section-head" style="margin-top:80px"><h2>Campaign evidence</h2><p>Figures are views and upvotes on individual posts, not conversions or sales.</p></div>
       <div class="evidence-grid">
-        <article class="evidence-card"><h3>Animonlife · Post reach</h3><div class="metrics"><div class="metric"><strong>17K</strong><span>Views</span></div><div class="metric"><strong>35.9%</strong><span>US share on this post</span></div><div class="metric"><strong>7.1%</strong><span>Canada share</span></div></div><p>One supplied insight screenshot shows about 17K views in the first 48-hour chart. Its audience breakdown lists the United States at 35.9% and Canada at 7.1%.</p></article>
-        <article class="evidence-card"><h3>Animonlife · US audience reach</h3><div class="metrics"><div class="metric"><strong>16K</strong><span>Views</span></div><div class="metric"><strong>97.4%</strong><span>US share on this post</span></div><div class="metric"><strong>15</strong><span>Comments shown</span></div></div><p>A separate supplied post insight shows about 16K views, with 97.4% of views from the United States, 10 upvotes, and 15 comments.</p></article>
-        <article class="evidence-card"><h3>Animonlife · Additional posts</h3><div class="metrics"><div class="metric"><strong>12.6K</strong><span>Views</span></div><div class="metric"><strong>12K</strong><span>Views</span></div><div class="metric"><strong>6.5K</strong><span>Views</span></div></div><p>Other supplied screenshots show posts at approximately 12.6K, 12K, and 6.5K views. These are separate post totals and should not be added together as unique reach.</p></article>
-        <article class="evidence-card"><h3>Comment samples</h3><p>Selected examples of concise, context-aware replies and practical recommendations from the supplied screenshots.</p><div class="quote-sample">“Don’t buy a big creator CRM yet. I use Billo to get 10–20 clips around one product, test them, then rehire the creators who actually perform.”</div><div class="quote-sample">“Your list mixes VPN apps and proxy vendors for dev QA. Proxy-Cheap is useful for testing, but it’s not really a WireGuard VPN replacement.”</div><p style="margin-top:16px">These are writing samples, not Animonlife-specific comments. Brand attribution should only be added where confirmed.</p></article>
+        <article class="evidence-card">
+          <h3>Autumn AI on r/singularity</h3>
+          <div class="metrics two"><div class="metric"><strong>200K+</strong><span>Views</span></div><div class="metric"><strong>200</strong><span>Upvotes</span></div></div>
+          <p>A post for Autumn AI crossed 200K views and 200 upvotes on r/singularity.</p>
+        </article>
+        <article class="evidence-card">
+          <h3>Autumn AI on r/investing</h3>
+          <div class="metrics two"><div class="metric"><strong>100K+</strong><span>Views</span></div><div class="metric"><strong>75</strong><span>Upvotes</span></div></div>
+          <p>A post for Autumn AI crossed 100K views and 75 upvotes on r/investing.</p>
+        </article>
+        <article class="evidence-card">
+          <h3>Animonlife post reach</h3>
+          <div class="metrics"><div class="metric"><strong>17K</strong><span>Views</span></div><div class="metric"><strong>35.9%</strong><span>US share</span></div><div class="metric"><strong>7.1%</strong><span>Canada share</span></div></div>
+          <p>Insights on the 48-hour chart show about 17K views. The United States accounts for 35.9% of views and Canada for 7.1%.</p>
+        </article>
+        <article class="evidence-card">
+          <h3>Animonlife US audience</h3>
+          <div class="metrics"><div class="metric"><strong>16K</strong><span>Views</span></div><div class="metric"><strong>97.4%</strong><span>US share</span></div><div class="metric"><strong>15</strong><span>Comments</span></div></div>
+          <p>A separate post shows about 16K views, 97.4% of them from the United States, with 10 upvotes and 15 comments.</p>
+        </article>
+        <article class="evidence-card wide">
+          <h3>Comment samples</h3>
+          <p>Concise, context-aware replies with practical recommendations.</p>
+          <div class="quotes">
+            <blockquote class="quote">“Don’t buy a big creator CRM yet. I use Billo to get 10–20 clips around one product, test them, then rehire the creators who actually perform.”</blockquote>
+            <blockquote class="quote">“Your list mixes VPN apps and proxy vendors for dev QA. Proxy-Cheap is useful for testing, but it’s not really a WireGuard VPN replacement.”</blockquote>
+          </div>
+          <p>These are writing samples, not Animonlife comments. Brand attribution is added only where confirmed.</p>
+        </article>
       </div>
     </div></section>
 
     <section class="section" id="approach"><div class="wrap approach">
-      <div class="approach-intro"><div class="eyebrow">How I work</div><h2>Understand the room before joining the conversation.</h2><p>Reddit has its own culture, norms, and expectations. Effective marketing starts with context, not copy-pasting a message into every community.</p></div>
+      <div class="approach-intro"><h2>Understand the room before joining the conversation.</h2><p>Reddit has its own culture, norms, and expectations. Effective marketing starts with context, not copy-pasting a message into every community.</p></div>
       <div class="steps">
-        <div class="step"><div class="step-no">01</div><div><h3>Listen &amp; research</h3><p>Understand community rules, recurring questions, audience language, and the context around relevant discussions.</p></div></div>
-        <div class="step"><div class="step-no">02</div><div><h3>Map the opportunity</h3><p>Identify where a brand can genuinely help, which topics matter, and where participation would not be appropriate.</p></div></div>
-        <div class="step"><div class="step-no">03</div><div><h3>Plan &amp; execute</h3><p>Coordinate content and campaign tasks with clear briefs, human review, and respect for community rules and disclosure requirements.</p></div></div>
-        <div class="step"><div class="step-no">04</div><div><h3>Measure &amp; improve</h3><p>Track what can be verified, document learnings, and use evidence to improve the next round of work.</p></div></div>
+        <div class="step"><div class="step-no">1</div><div><h3>Listen &amp; research</h3><p>Understand community rules, recurring questions, audience language, and the context around relevant discussions.</p></div></div>
+        <div class="step"><div class="step-no">2</div><div><h3>Map the opportunity</h3><p>Identify where a brand can genuinely help, which topics matter, and where participation would not be appropriate.</p></div></div>
+        <div class="step"><div class="step-no">3</div><div><h3>Plan &amp; execute</h3><p>Coordinate content and campaign tasks with clear briefs, human review, and respect for community rules and disclosure requirements.</p></div></div>
+        <div class="step"><div class="step-no">4</div><div><h3>Measure &amp; improve</h3><p>Track what can be verified, document learnings, and use evidence to improve the next round of work.</p></div></div>
       </div>
     </div></section>
 
     <section class="section" id="principles"><div class="wrap">
-      <div class="section-head"><div><div class="eyebrow">Areas of focus</div><h2>A practical mix of strategy and execution.</h2></div><p>My work sits at the intersection of understanding communities, organizing campaigns, and making the work easier to evaluate.</p></div>
-      <div class="principles">
-        <article class="principle"><div class="symbol" aria-hidden="true">↗</div><h3>Reddit marketing</h3><p>Campaign planning, community-aware content, and brand participation that adds value to the discussion.</p></article>
-        <article class="principle"><div class="symbol" aria-hidden="true">⌕</div><h3>Community intelligence</h3><p>Audience research, discussion mapping, recurring pain points, and competitor conversation analysis.</p></article>
-        <article class="principle"><div class="symbol" aria-hidden="true">▦</div><h3>Campaign operations</h3><p>Task coordination, tracking sheets, quality checks, workflow documentation, and clear reporting.</p></article>
+      <div class="section-head"><h2>Areas of focus</h2><p>Understanding communities, organizing campaigns, and making the work easier to evaluate.</p></div>
+      <div class="focus">
+        <article><h3>Reddit marketing</h3><p>Campaign planning, community-aware content, and brand participation that adds value to the discussion.</p></article>
+        <article><h3>Community intelligence</h3><p>Audience research, discussion mapping, recurring pain points, and competitor conversation analysis.</p></article>
+        <article><h3>Campaign operations</h3><p>Task coordination, tracking sheets, quality checks, workflow documentation, and clear reporting.</p></article>
       </div>
     </div></section>
 
-    <section class="section" id="contact"><div class="wrap"><div class="contact"><div><div class="eyebrow">Contact</div><h2>Vartika M.</h2><p>Reddit Marketing &amp; Growth · Community Research · B2B SaaS · SEO/GEO</p><div class="contact-details"><a href="mailto:vartikamanral1@gmail.com">vartikamanral1@gmail.com</a><a href="tel:+919873571173">+91 9873571173</a></div></div><div><a class="button primary" id="emailButton" href="mailto:vartikamanral1@gmail.com?subject=Reddit%20marketing%20inquiry">Email me ↗</a></div></div></div></section>
+    <section class="section" id="contact"><div class="wrap"><div class="contact">
+      <div>
+        <h2>Get in touch</h2>
+        <p>Reddit marketing and growth, community research, B2B SaaS, and SEO/GEO.</p>
+        <div class="contact-details"><a href="mailto:vartikamanral1@gmail.com">vartikamanral1@gmail.com</a><a href="tel:+919873571173">+91 9873571173</a></div>
+      </div>
+      <div><a class="button primary" href="mailto:vartikamanral1@gmail.com?subject=Reddit%20marketing%20inquiry">Email me</a></div>
+    </div></div></section>
   </main>
-  <footer class="wrap footer"><span>© <span id="year"></span> Reddit Marketing Portfolio</span><span>Built around real work, clear thinking, and honest evidence.</span></footer>
-</div>
+
+  <footer class="wrap footer"><span>© <span id="year"></span> Vartika M.</span><a href="#home">Back to top</a></footer>
 
 <dialog id="projectDialog" aria-labelledby="dialogTitle">
   <button class="dialog-close" id="closeDialog" aria-label="Close">×</button>
-  <div class="eyebrow">Case study checklist</div>
   <h2 id="dialogTitle"></h2>
   <p id="dialogText"></p>
   <ul id="dialogList"></ul>
-  <p class="dialog-note">Use real, permission-cleared evidence. Do not invent results or publish confidential client or account information.</p>
-  <button class="button primary" id="doneDialog">Got it</button>
+  <p class="dialog-note">Examples are shown only where permission allows.</p>
+  <button class="button primary" id="doneDialog">Close</button>
 </dialog>
 
 <script>
 const projectDetails = {
-  campaign: { title: "Brand campaign execution", text: "Turn approved examples into a clear story of the work you personally handled.", items: ["Brand and campaign objective (only if disclosure is allowed)", "Selected post/comment screenshots with identifying details reviewed", "Your exact responsibilities and workflow", "Verified outcomes, or a clear note if metrics were not available"] },
-  prepsolution: { title: "PrepSolution — largest campaign", text: "More than 1,000 comments delivered with a daily cadence. This case study will focus on scale, consistency, and the delivery process rather than inventing performance claims.", items: ["1,000+ comments delivered", "Daily task and delivery coordination", "Reddit examples and approved evidence", "Performance results only where verified and attributable"] },
-  animonlife: { title: "Animonlife — major campaign", text: "The supplied Animonlife insights show multiple posts with view totals ranging from approximately 6.5K to 17K. The strongest examples include a 16K-view post whose audience was 97.4% US-based and a separate post with 17K views. These are post-level views, not unique reach or conversion results.", items: ["17K views on one supplied post insight", "16K views on another post, with 97.4% US audience share", "Additional supplied posts at approximately 12.6K, 12K, and 6.5K views", "Comment examples are displayed separately unless confirmed as part of this brand campaign"] },
-  brands: { title: "Multi-brand campaign portfolio", text: "A broader view of brand work across different categories. Each brand can have its own entry when the evidence and disclosure permissions are clear.", items: ["Max Life Insurance, LevelsRX, Lovescape, Willow, Truoux, and Guesty", "Vograce, Hisense, June Homes, and Outpost", "Citeworks, Google BigQuery, NetSuite, and Skyvia", "Telnyx, Billo, WHOP, Proxy-Cheap, IPRoyal, Decodo, and Bright Data", "Tourism, Elmo, and additional brands across 20+ projects", "Hisense included as high-volume post and comment work", "Client names and examples displayed subject to permission"] },
-  research: { title: "Community intelligence", text: "Show how research informed the plan, not just a list of subreddit names.", items: ["Research question and audience", "Communities reviewed and why they were relevant", "Patterns or user needs observed", "Recommendations and limitations"] },
-  operations: { title: "Campaign tracking systems", text: "Use a sanitized spreadsheet view to demonstrate your process and attention to detail.", items: ["What the sheet was used to coordinate", "Status fields and review process", "How errors or follow-ups were handled", "A sample report or workflow improvement, if verifiable"] }
+  autumnai: {
+    title: "Autumn AI",
+    text: "Two posts for Autumn AI passed 100K views, one on r/singularity and one on r/investing. These are post-level views and upvotes, not conversion results.",
+    items: ["r/singularity: 200K+ views and 200 upvotes", "r/investing: 100K+ views and 75 upvotes"]
+  },
+  prepsolution: {
+    title: "PrepSolution",
+    text: "My largest campaign to date: more than 1,000 comments delivered on a daily cadence. The work centred on scale, consistency, and a dependable delivery process.",
+    items: ["1,000+ comments delivered", "Daily task and delivery coordination", "Examples shared where approved", "Results reported only where they can be verified and attributed to the campaign"]
+  },
+  animonlife: {
+    title: "Animonlife",
+    text: "Insights from several posts show views ranging from about 6.5K to 17K. The strongest examples are a 17K-view post and a 16K-view post whose audience was 97.4% US-based. These are post-level views, not unique reach or conversion results.",
+    items: ["17K views on one post", "16K views on another, with a 97.4% US audience", "About 12.6K, 12K, and 6.5K views on three more posts", "Comment samples are shown separately unless confirmed as part of this campaign"]
+  }
 };
+
 const dialog = document.getElementById('projectDialog');
 document.querySelectorAll('[data-project]').forEach(button => button.addEventListener('click', () => {
   const detail = projectDetails[button.dataset.project];
@@ -296,6 +415,19 @@ document.getElementById('closeDialog').addEventListener('click', () => dialog.cl
 document.getElementById('doneDialog').addEventListener('click', () => dialog.close());
 dialog.addEventListener('click', e => { if (e.target === dialog) dialog.close(); });
 document.getElementById('year').textContent = new Date().getFullYear();
+
+/* Mark the nav link for the section currently in view */
+const navLinks = [...document.querySelectorAll('.navlinks a')];
+const byId = new Map(navLinks.map(a => [a.getAttribute('href').slice(1), a]));
+const spy = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    navLinks.forEach(a => a.removeAttribute('aria-current'));
+    const link = byId.get(entry.target.id);
+    if (link) link.setAttribute('aria-current', 'true');
+  });
+}, { rootMargin: '-40% 0px -55% 0px' });
+['home', 'work', 'approach', 'principles', 'contact'].forEach(id => { const el = document.getElementById(id); if (el) spy.observe(el); });
 </script>
 </body>
 </html>
